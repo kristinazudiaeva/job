@@ -1,0 +1,22 @@
+version: '3.1'
+
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: kris
+      POSTGRES_PASSWORD: 123321
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+
+  bot:
+    image: dockerbot:latest
+    environment:
+      DB_HOST: db
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
